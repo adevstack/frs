@@ -31,7 +31,10 @@ class Student:
         self.var_radio = StringVar()
         #----------------------------------------------------------------------------------------------------------------#
         # 1st image
-        img1 = Image.open(r"C:\Users\Aman\Desktop\FRs\img\logo1.jpg")
+        try:
+            img1 = Image.open("img/logo1.jpg")
+        except:
+            img1 = self.create_placeholder_image(350, 130, "Logo 1")
         img1 = img1.resize((350, 130), Image.Resampling.LANCZOS)
         self.photoimg1 = ImageTk.PhotoImage(img1)
 
@@ -39,7 +42,10 @@ class Student:
         f_lbl1.place(x=0, y=0, width=350, height=130)
 
         # 2nd image
-        img2 = Image.open(r"C:\Users\Aman\Desktop\FRs\img\logo1.jpg")
+        try:
+            img2 = Image.open("img/logo1.jpg")
+        except:
+            img2 = self.create_placeholder_image(350, 130, "Logo 2")
         img2 = img2.resize((350, 130), Image.Resampling.LANCZOS)
         self.photoimg2 = ImageTk.PhotoImage(img2)
 
@@ -47,7 +53,10 @@ class Student:
         f_lbl2.place(x=350, y=0, width=350, height=135)
 
         # 3rd image
-        img3 = Image.open(r"C:\Users\Aman\Desktop\FRs\img\logo.png")
+        try:
+            img3 = Image.open("img/logo.png")
+        except:
+            img3 = self.create_placeholder_image(350, 130, "Logo 3")
         img3 = img3.resize((350, 130), Image.Resampling.LANCZOS)
         self.photoimg3 = ImageTk.PhotoImage(img3)
 
@@ -55,7 +64,10 @@ class Student:
         f_lbl3.place(x=500, y=0, width=350, height=135)
 
         # 4th image
-        img4 = Image.open(r"C:\Users\Aman\Desktop\FRs\img\logo1.jpg")
+        try:
+            img4 = Image.open("img/logo1.jpg")
+        except:
+            img4 = self.create_placeholder_image(350, 130, "Logo 4")
         img4 = img4.resize((350, 130), Image.Resampling.LANCZOS)
         self.photoimg4 = ImageTk.PhotoImage(img4)
 
@@ -63,15 +75,21 @@ class Student:
         f_lbl4.place(x=840, y=0, width=350, height=135)
         
         # 5th image
-        img14 = Image.open(r"C:\Users\Aman\Desktop\FRs\img\logo1.jpg")
+        try:
+            img14 = Image.open("img/logo1.jpg")
+        except:
+            img14 = self.create_placeholder_image(350, 130, "Logo 5")
         img14 = img14.resize((350, 130), Image.Resampling.LANCZOS)
         self.photoimg14 = ImageTk.PhotoImage(img14)
 
-        f_lbl4 = Label(self.root, image=self.photoimg4)
-        f_lbl4.place(x=1050, y=0, width=350, height=135)
+        f_lbl5 = Label(self.root, image=self.photoimg14)
+        f_lbl5.place(x=1050, y=0, width=350, height=135)
 
         # bg image
-        img5 = Image.open(r"C:\Users\Aman\Desktop\FRs\img\bg2.jpg")
+        try:
+            img5 = Image.open("img/bg2.jpg")
+        except:
+            img5 = self.create_placeholder_image(1360, 710, "Background")
         img5 = img5.resize((1360,710), Image.Resampling.LANCZOS)
         self.photoimg5 = ImageTk.PhotoImage(img5)
 
@@ -81,6 +99,22 @@ class Student:
         title_lbl = Label(bg_img,text="FACE RECOGNITION SYSTEM",font=("times new roman",15,"bold"),bg="white",fg="dark blue")
         title_lbl.place(x=0, y=0, width=1360, height=45)
 
+    def create_placeholder_image(self, width, height, text):
+        """Create a placeholder image with text"""
+        img = Image.new('RGB', (width, height), color='lightgray')
+        draw = ImageDraw.Draw(img)
+        try:
+            font = ImageFont.truetype("Arial", 20)
+        except:
+            font = ImageFont.load_default()
+        text_bbox = draw.textbbox((0, 0), text, font=font)
+        text_width = text_bbox[2] - text_bbox[0]
+        text_height = text_bbox[3] - text_bbox[1]
+        x = (width - text_width) // 2
+        y = (height - text_height) // 2
+        draw.text((x, y), text, fill='black', font=font)
+        return img
+
         main_frame=Frame(bg_img,bd=2,bg="white")
         main_frame.place(x=0,y=45,width=1500,height=650)
 
@@ -88,7 +122,10 @@ class Student:
         Left_frame=LabelFrame(main_frame,bd=2,bg="white",relief=RIDGE,text="Student Details",font=("times new roman",12,"bold"))
         Left_frame.place(x=45,y=10,width=600,height=490)
 
-        img_left = Image.open(r"C:\Users\Aman\Desktop\FRs\img\student.png")
+        try:
+            img_left = Image.open("img/student.png")
+        except:
+            img_left = self.create_placeholder_image(120, 80, "Student")
         img_left= img_left.resize((120,80), Image.Resampling.LANCZOS)
         self.photoimg_left = ImageTk.PhotoImage(img_left)
 
@@ -254,7 +291,10 @@ class Student:
         Right_frame = LabelFrame(main_frame, bd=2, bg="white", relief=RIDGE, text="Student Details", font=("times new roman",12,"bold"))
         Right_frame.place(x=710, y=10, width=600, height=490)
 
-        img_Right = Image.open(r"C:\Users\Aman\Desktop\FRs\img\srch.png")
+        try:
+            img_Right = Image.open("img/srch.png")
+        except:
+            img_Right = self.create_placeholder_image(120, 80, "Search")
         img_Right= img_Right.resize((120,80), Image.Resampling.LANCZOS)
         self.photoimg_Right = ImageTk.PhotoImage(img_Right)
 
