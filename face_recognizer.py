@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw, ImageFont
 from tkinter import messagebox
 from time import strftime
 from datetime import datetime
@@ -20,14 +20,20 @@ class Recognizer:
         title_lbl.place(x=0, y=0, width=1360, height=45)
 
         # 1st Image
-        img_top = Image.open(r"C:\Users\Aman\Desktop\FRs\img\tdimg2.jpg")
+        try:
+            img_top = Image.open("img/tdimg2.jpg")
+        except:
+            img_top = self.create_placeholder_image(700, 700, "Face Recognition")
         img_top = img_top.resize((700, 700), Image.LANCZOS)
         self.photoimg_top = ImageTk.PhotoImage(img_top)
         f_lbl = Label(self.root, image=self.photoimg_top)
         f_lbl.place(x=0, y=45, width=700, height=700)
 
         # 2nd Image
-        img_bottom = Image.open(r"C:\Users\Aman\Desktop\FRs\img\tr2.webp")
+        try:
+            img_bottom = Image.open("img/tr2.webp")
+        except:
+            img_bottom = self.create_placeholder_image(860, 700, "Recognition Panel")
         img_bottom = img_bottom.resize((860, 700), Image.LANCZOS)
         self.photoimg_bottom = ImageTk.PhotoImage(img_bottom)
         f_lbl = Label(self.root, image=self.photoimg_bottom)
@@ -36,6 +42,22 @@ class Recognizer:
         # Button
         b1_1 = Button(f_lbl, text="Start Training", cursor="hand2", font=("times new roman", 20, "bold"), bg="royal blue", fg="white", command=self.face_recog)
         b1_1.place(x=440, y=500, width=200, height=40)
+
+    def create_placeholder_image(self, width, height, text):
+        """Create a placeholder image with text"""
+        img = Image.new('RGB', (width, height), color='lightgray')
+        draw = ImageDraw.Draw(img)
+        try:
+            font = ImageFont.truetype("Arial", 20)
+        except:
+            font = ImageFont.load_default()
+        text_bbox = draw.textbbox((0, 0), text, font=font)
+        text_width = text_bbox[2] - text_bbox[0]
+        text_height = text_bbox[3] - text_bbox[1]
+        x = (width - text_width) // 2
+        y = (height - text_height) // 2
+        draw.text((x, y), text, fill='black', font=font)
+        return img
 
     def mark_attendance(self, i, r, n, d):
         with open("oldschooldev.csv", "r+", newline="\n") as f:
